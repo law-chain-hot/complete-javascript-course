@@ -1,55 +1,55 @@
-/*****************************
+/****************************
 * Variables and data types
 */
-/*
-var firstName = 'John';
-console.log(firstName);
 
-var lastName = 'Smith';
-var age = 28;
+// var firstName = 'John';
+// console.log(firstName);
 
-var fullAge = true;
-console.log(fullAge);
+// var lastName = 'Smith';
+// var age = 28;
 
-var job;
-console.log(job);
+// var fullAge = true;
+// console.log(fullAge);
 
-job = 'Teacher';
-console.log(job);
+// var job;
+// console.log(job);
 
-// Variable naming rules
-var _3years = 3;
-var johnMark = 'John and MArk';
-var if = 23;
-*/
+// job = 'Teacher';
+// console.log(job);
+
+// // Variable naming rules
+// var _3years = 3;
+// var johnMark = 'John and MArk';
+// // var if = 23;
+
 
 
 
 /*****************************
 * Variable mutation and type coercion
 */
-/*
-var firstName = 'John';
-var age = 28;
 
-// Type coercion
-console.log(firstName + ' ' + age);
+// var firstName = 'John';
+// var age = 28;
 
-var job, isMarried;
-job = 'teacher';
-isMarried = false;
+// // Type coercion
+// console.log(firstName + ' ' + age);
 
-console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
+// var job, isMarried;
+// job = 'teacher';
+// isMarried = false;
 
-// Variable mutation
-age = 'twenty eight';
-job = 'driver';
+// console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
 
-alert(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
+// // Variable mutation
+// age = 'twenty eight';
+// job = 'driver';
 
-var lastName = prompt('What is his last Name?');
-console.log(firstName + ' ' + lastName);
-*/
+// alert(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
+
+// var lastName = prompt('What is his last Name?');
+// console.log(firstName + ' ' + lastName);
+
 
 
 
@@ -137,7 +137,7 @@ Mark and John are trying to compare their BMI (Body Mass Index), which is calcul
 
 GOOD LUCK 😀
 */
-/*
+/*=
 var massMark = 78; // kg
 var heightMark = 1.69; // meters
 
