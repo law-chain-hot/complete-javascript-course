@@ -258,6 +258,13 @@ var UIController = (function() {
 
         },
 
+
+        formatNumber: function(num, type) {
+            num = Math.abs(num);
+            num = num.toFixed(2);
+        },
+
+
         getDOMstrings: function() {
             return DOMstrings;
         },
@@ -303,7 +310,7 @@ var AppController = (function(budgetCtrl, UICtrl) {
 
         // TO DO LIST
         // 1. Get the filed input data
-        input = UICtrl.getInput()
+        input = UICtrl.getInput();
 
         if (input.description !== "" && !isNaN(input.value) && input.value > 0 ){
             // 2. Add the item into the budget controller

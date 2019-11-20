@@ -11,7 +11,7 @@ var Person = function(name, yearOfBirth, job) {
     this.name = name;
     this.yearOfBirth = yearOfBirth;
     this.job = job;
-}
+};
 
 Person.prototype.calculateAge  = function() {
     console.log(2016 - this.yearOfBirth);
