@@ -6,6 +6,7 @@ var budgetController = (function() {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentatge = -1;
     };
 
     var Income = function(id, description, value){
@@ -14,9 +15,25 @@ var budgetController = (function() {
         this.value = value;
     };
 
+    Expense.prototype.calculatePercentages = function() {
+        if (data.totals.inc > 0){
+            this.percentatge = Math.round((data.totals.exp / data.totals.inc) * 100);
+        }
+        else{
+            this.percentatge = -1;
+        }
+    },
+
+    Expense.prototype.getPercentages = function() {
+        return this.percentatge;
+    }
+
     var calculateTotal = function(type) {
         var sum = 0;
-        data.allItems[type].forEach(function(cur){
+        data.allItems[type].forEach(function(cur, index, array){
+            // console.log(cur);
+            // console.log(index);
+            // console.log(array);
             sum += cur.value;
         });
         data.totals[type] = sum;
@@ -37,7 +54,7 @@ var budgetController = (function() {
 
     return {
         addItem: function(type, des, val) {
-            var newItem;
+            var newItem, ID;
             
             //create the new ID
             if (data.allItems[type].length > 0) {
@@ -61,6 +78,7 @@ var budgetController = (function() {
             return newItem;
         },
 
+
         calculateBudget: function() {
             //calculate the total income and expenses
             calculateTotal('exp');
@@ -78,6 +96,7 @@ var budgetController = (function() {
             }
         },
 
+
         getBudget: function(){
             return {
                 budget: data.budget,
@@ -86,6 +105,43 @@ var budgetController = (function() {
                 percentage: data.percentage,
             };
         },
+
+
+        deleteItem: function(type, id) {
+        
+            var ids, index;
+            ids = data.allItems[type].map(function(current) {
+                return current.id;
+            })
+
+
+            // console.log(ids);
+            // console.log(id);
+            index = ids.indexOf(id); // return the index num of an array
+            // console.log(index);
+            if (index !== -1){
+                data.allItems[type].splice(index, 1); // delete the item from index to the index+1
+            }
+        },
+
+
+        calculatePercentages: function() {
+            data.allItems['exp'].forEach(function(cur) {
+                cur.calculatePercentages();
+            });
+        },
+
+        getPercentages: function() {
+            var allPercentatges;
+            allPercentatges = data.allItems['exp'].map(function(cur){
+                return cur.getPercentages();
+            });
+            return allPercentatges;
+        },
+
+        testing: function(){
+            console.log(data);
+        }
     }
 
 })(); //invoke the funtion at the end by ()
@@ -108,7 +164,13 @@ var UIController = (function() {
         expenseLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
         container: '.container',
+        percentageEach: '.item__percentage',
+    };
 
+    var nodeListforEach = function(list, callback){
+        for (var i = 0; i < list.length; ++i){
+            callback(list[i], i);
+        }
     };
 
     return {
@@ -171,7 +233,28 @@ var UIController = (function() {
             else{
                 document.querySelector(DOMstrings.percentageLabel).textContent = '---';
             }
+        },
 
+        displayPercentages: function(percentages) {
+            var fields;
+
+            fields = document.querySelectorAll(DOMstrings.percentageEach);
+
+            nodeListforEach(fields, function(current, index){
+                if (percentages[index] > 0){
+                    current.textContent = percentages[index] + '%';
+                }
+                else{
+                    current.textContent = '---';
+                }
+            });
+        },
+
+
+        deleteListItem: function(selectorID){
+            
+            var el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
 
         },
 
@@ -179,8 +262,6 @@ var UIController = (function() {
             return DOMstrings;
         },
     };
-    
-
 })();
 
 
@@ -236,26 +317,55 @@ var AppController = (function(budgetCtrl, UICtrl) {
 
             // 5. Display the budgets on the UI
             updateBudget();
+
+            // 6. Calculate and update percentages
+            updatePercentages();
+
         }
     };
 
     var ctrlDeleteItem = function(event) {
         var itemID, splitID, type, ID, target;
         target = event.target
-        itemID = target.parentNode.parentNode.parentNode.parentNode;
+        itemID = target.parentNode.parentNode.parentNode.parentNode.id;
         console.log(itemID);
 
-        //inc-8
-        splitID = itemID.split('-');
-        type = splitID[0];  // inc
-        ID = splitID[1];    // 8
+        if (itemID){
+            //inc-8
+            splitID = itemID.split('-');
+            type = splitID[0];  // inc
+            ID = parseInt(splitID[1]);    // 8
 
-        // 1. delete the data from the data structure
+            // 1. delete the data from the data structure
+            budgetCtrl.deleteItem(type, ID)
 
-        // 2. delete the item from UI
+            // 2. delete the item from UI
+            UICtrl.deleteListItem(itemID);
 
-        // 3. Update and show the new budget
+            // 3. Update and show the new budget
+            updateBudget();
+
+            // 4. Calculate and update percentages
+            updatePercentages();
+        }
     };
+
+
+    var updatePercentages = function() {
+        var allPerc;
+
+        // 1. Calculate percentages
+        budgetCtrl.calculatePercentages();
+
+        // 2. Get the percentatges from the budget controller
+        allPerc = budgetCtrl.getPercentages();
+
+        // 3. Updata the UI with new percentages
+        UICtrl.displayPercentages(allPerc);
+
+
+    }
+
 
     return{
         init: function(){

@@ -17,6 +17,8 @@ Person.prototype.calculateAge  = function() {
     console.log(2016 - this.yearOfBirth);
 };
 
+Person.prototype.test = 'test one'; 
+
 Person.prototype.lastName = 'Smith';
 
 var john = new Person('John', 1990, 'teacher');
@@ -30,8 +32,30 @@ mark.calculateAge();
 console.log(john.lastName);
 console.log(jane.lastName);
 console.log(mark.lastName);
-*/
+console.log(mark.test);
 
+
+function SuperType() {
+    this.property = true;
+}
+
+SuperType.prototype.getSuperValue = function() {
+    return this.property;
+}
+
+function SubType() {
+    this.subproperty = false;
+}
+
+// 这里是关键，创建SuperType的实例，并将该实例赋值给SubType.prototype
+SubType.prototype = new SuperType(); 
+
+SubType.prototype.getSubValue = function() {
+    return this.subproperty;
+}
+
+var instance = new SubType();
+console.log(instance.getSuperValue()); // true
 
 
 /////////////////////////////
@@ -328,7 +352,7 @@ c) correct answer (I would use a number for this)
 7. Suppose this code would be a plugin for other programmers to use in their code. So make sure that all your code is private and doesn't interfere with the other programmers code (Hint: we learned a special technique to do exactly that).
 */
 
-
+/*
 
 (function() {
     function Question(question, answers, correct) {
@@ -376,7 +400,7 @@ c) correct answer (I would use a number for this)
 
     questions[n].checkAnswer(answer);
 })();
-
+*/
 
 
 
@@ -393,7 +417,7 @@ c) correct answer (I would use a number for this)
 */
 
 
-
+/*
 (function() {
     function Question(question, answers, correct) {
         this.question = question;
@@ -472,3 +496,4 @@ c) correct answer (I would use a number for this)
     nextQuestion();
     
 })();
+*/
