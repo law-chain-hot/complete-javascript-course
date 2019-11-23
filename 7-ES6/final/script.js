@@ -272,7 +272,7 @@ console.log(retirement);
 /////////////////////////////////
 // Lecture: Arrays
 
-/*
+/
 const boxes = document.querySelectorAll('.box');
 
 //ES5
