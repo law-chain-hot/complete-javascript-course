@@ -25,25 +25,92 @@
 
 
         // ------------------
+        // const getIDs = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve([523, 883, 432, 974]);
+        //         reject('error in setTimeout()')
+        //     }, 1500)
+        // });
+
+        // getIDs
+        // .then(x => {
+        //     console.log(x);
+        // })
+        // .catch(error => {
+        //     console.log('Error!!');
+        // });
+
+
         const getIDs = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve([523, 883, 432, 974]);
-                reject('error in setTimeout()')
-            }, 1500)
+            }, 1500);
         });
 
-        getIDs
-        .then(x => {
-            console.log(x);
-        })
-        .catch(error => {
-            console.log('Error!!');
+        const getRecipe = recID => {
+            return new Promise((resolve, reject) => {
+                setTimeout(ID => {
+                    const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+                    resolve(`${ID}: ${recipe.title}`);
+                }, 1500, recID);
+            });
+        };
+
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout(pub => {
+                    const recipe = {title: 'Italian Pizza', publisher: 'Jonas'};
+                    resolve(`${pub}: ${recipe.title}`);
+                }, 1500, publisher);
+            });
+        };
+
+
+        // //-----
+        async function getRecipesAW() {
+            const IDs = await getIDs;
+            console.log(IDs);
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe);
+            const related = await getRelated('Jonas Schmedtmann');
+            console.log(related);
+
+            return recipe;
+        }
+        getRecipesAW().then(result => console.log(`${result} is the best one!`));
+
+        
+        // .then(result => {
+        //     console.log(result);
+        //     return result.json();
+        // })
+        // .then(data => {
+        //     console.log(data);
+        // })
+        // .catch(err => console.log(err));
+
+
+
+        async function testFetch(ID) {
+            try{
+                const lalala = fetch(`http://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${ID}/`)
+                const result = await lalala;
+                const data = await result.json();
+                const today = data.consolidated_weather[0];
+                console.log(`The weather in ${data.title} stay between ${today.min_temp} to ${today.max_temp}`)
+                return data;
+            } catch (error){
+                alert(error);
+            }
+            
+        }
+        testFetch(2487956);
+
+        let dataLondon;
+        testFetch(44418).then(data => {
+            dataLondon = data
+            console.log(dataLondon);
         });
-
-
-
-
-
 
     </script>
 </body>
