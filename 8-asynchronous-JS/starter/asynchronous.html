@@ -9,7 +9,42 @@
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
+        // const second = () =>{
+        //     setTimeout(() => {
+        //         console.log('Asynchronous there');
+        //     }, 1000);
+        // };
         
+        // const first = () => {
+        //     console.log('Hey, there');
+        //     second();
+        //     console.log('The end');
+        // }
+
+        // first();
+
+
+        // ------------------
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([523, 883, 432, 974]);
+                reject('error in setTimeout()')
+            }, 1500)
+        });
+
+        getIDs
+        .then(x => {
+            console.log(x);
+        })
+        .catch(error => {
+            console.log('Error!!');
+        });
+
+
+
+
+
+
     </script>
 </body>
 </html>

@@ -272,7 +272,7 @@ console.log(retirement);
 /////////////////////////////////
 // Lecture: Arrays
 
-/
+/*
 const boxes = document.querySelectorAll('.box');
 
 //ES5
@@ -454,7 +454,7 @@ var emily = new SmithPerson('Emily', 1983, 'Diaz', 'spanish');
 /////////////////////////////////
 // Lecture: Maps
 
-/*
+/
 const question = new Map();
 question.set('question', 'What is the official name of the latest major JavaScript version?');
 question.set(1, 'ES5');
@@ -496,7 +496,7 @@ console.log(question.get(ans === question.get('correct')));
 /////////////////////////////////
 // Lecture: Classes
 
-/*
+/
 //ES5
 var Person5 = function(name, yearOfBirth, job) {
     this.name = name;
@@ -540,7 +540,7 @@ Person6.greeting();
 /////////////////////////////////
 // Lecture: Classes and subclasses
 
-/*
+
 //ES5
 var Person5 = function(name, yearOfBirth, job) {
     this.name = name;
