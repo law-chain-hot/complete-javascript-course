@@ -1,6 +1,5 @@
-// Global app controller
-import num from './test'
+import Search from './model/Search';
 
-console.log(`This is a very${num}`);
-
-console.log("22333");
+const search = new Search('pizza');
+search.getResult()
+console.log(search);
