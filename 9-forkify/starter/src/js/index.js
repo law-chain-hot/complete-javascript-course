@@ -55,7 +55,9 @@ elements.searchForm.addEventListener('submit', e => {
 // event delegation
 elements.searchResPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
-    console.log(btn.dataset);
+    console.log(e);
+    console.log(e.target);
+    // console.log(btn.dataset);
     if (btn) {
         const goToPage = parseInt(btn.dataset.goto, 10); // ????????!!!!!!   dataset, 10
         searchView.clearRes();
@@ -90,7 +92,7 @@ const controlRecipe = async () => {
 
             // 5. render the result on UI
             console.log(state.recipe);
-            
+
         } catch (error) {
             console.log(error);
             alert('Error processing recipe!');
