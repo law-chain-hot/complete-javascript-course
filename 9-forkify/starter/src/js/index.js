@@ -2,6 +2,7 @@ import Search from './model/Search';
 import * as searchView from "./view/searchView";
 import { elements, renderLoader, clearLoader } from './view/base'
 import Recipe from './model/Recipe';
+import * as recipeView from "./view/recipeView";
 
 /** Global state of the app
  *  - Search object
@@ -29,6 +30,7 @@ const controlSearch = async () => {
         // 3. prepare UI for results
         searchView.clearInput();
         searchView.clearRes();
+        recipeView.clearRecipe();
         renderLoader(elements.searchRes);
 
         try {
@@ -58,7 +60,7 @@ elements.searchResPages.addEventListener('click', e => {
     console.log(e);
     console.log(e.target);
     // console.log(btn.dataset);
-    if (btn) {
+    if (btn) { 
         const goToPage = parseInt(btn.dataset.goto, 10); // ????????!!!!!!   dataset, 10
         searchView.clearRes();
         searchView.renderResults(state.search.result, goToPage);
@@ -78,6 +80,11 @@ const controlRecipe = async () => {
 
     if (id){
         // 2.0 prepare UI for results (like loader)
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+
+        // 2.0.1 highlight selected search item
+        if (state.search) searchView.highlightSelected(id);
 
         // 2.1 new recipe obj and add to state
         state.recipe = new Recipe(id);
@@ -85,26 +92,40 @@ const controlRecipe = async () => {
         try{
             // 3. get the recipe data (by await)
             await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
 
             // 4. calculate everything and time
             state.recipe.calcTime();
             state.recipe.calcServings();
 
             // 5. render the result on UI
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
 
         } catch (error) {
             console.log(error);
             alert('Error processing recipe!');
+            clearLoader();
         }
-
     }
 
 }
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-// const test = new Recipe(47746);
-// // console.log(test);
-// test.getRecipe();
-// console.log(test)
+
+//serving controller
+elements.recipe.addEventListener('click', e => {
+    if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+        // Decrease button is clicked
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServings('dec');
+            recipeView.updateServingsIngredients(state.recipe);
+        }
+    } else if (e.target.matches('.btn-increase, .btn-increase *')) {
+        // Increase button is clicked
+        state.recipe.updateServings('inc');
+        recipeView.updateServingsIngredients(state.recipe);
+    }
+
+});

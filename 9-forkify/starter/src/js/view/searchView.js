@@ -14,6 +14,13 @@ export const clearRes = () => {
     elements.searchResPages.innerHTML = '';
 };
 
+export const highlightSelected = id => {
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    resultsArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+    document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
+};
 
 const limitRecipeTitle = (title, limit = 17) =>{
     const newTitle = [];
@@ -85,7 +92,7 @@ export const renderButton = (page, numTotal, perPage) => {
     elements.searchResPages.insertAdjacentHTML('afterbegin', button);
 };
 
-export const renderResults = (recipes, page=2, perPage=10) => {
+export const renderResults = (recipes, page=1, perPage=13) => {
     // render results of currente page
     const start = (page - 1) * perPage;
     const end = page * perPage;
