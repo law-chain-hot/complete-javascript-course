@@ -18,6 +18,7 @@ import { elements, renderLoader, clearLoader } from './view/base';
  *  - Liked reciped
  */
 const state = {};
+window.state = state;
 
 
 /**
@@ -137,8 +138,28 @@ const controlList = () => {
         const item = state.list.addItem(el.count, el.unit, el.ingredient);
         listView.renderItem(item);
     });
-}
+};
 
+
+// Handle delete and update list item events
+elements.shopping.addEventListener('click', el => {
+    // Get the id of item
+    const id = el.target.closest('.shopping__item').dataset.itemid;  //确保每次点击能得到 ID
+
+    // Handle the Delete button
+    if (el.target.matches('.shopping__delete, .shopping__delete *')){
+        // Delete from state
+        state.list.deleteItem(id);
+
+        // Delete from UI
+        listView.deleteItem(id);
+    } 
+    // Handle the update
+    else if (el.target.matches('.shopping__count-value')){
+        const val = parseFloat(el.target.value, 10);
+        state.list.updateCount(id, val);
+    }
+});
 
 
 //serving controller
