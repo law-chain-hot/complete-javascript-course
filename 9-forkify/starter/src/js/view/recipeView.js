@@ -111,7 +111,6 @@ export const renderRecipe = recipe => {
             </div>
     `;
     elements.recipe.insertAdjacentHTML('afterbegin', markup);
-    
 };
 
 export const updateServingsIngredients = recipe => {
