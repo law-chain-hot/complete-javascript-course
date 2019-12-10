@@ -194,6 +194,17 @@ body {
     height: 4.5rem;
     display: block; }
 
+.header2 {
+  grid-area: head;
+  background-color: #F9F5F3;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.text{
+    align-items: center;
+    justify-content: space-between;}
+
 .search {
   background-color: #fff;
   /* border-radius: 10rem; */
@@ -528,3 +539,10 @@ body {
   .shopping__item:hover .shopping__delete {
     opacity: 1;
     visibility: visible; }
+
+
+/* extra */
+
+.h2 {
+  bold: false;
+}
