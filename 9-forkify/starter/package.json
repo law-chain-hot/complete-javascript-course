@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development",
-    "bulit": "webpack --mode production",
+    "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open"
   },
   "author": "Qianhao Luo",

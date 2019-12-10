@@ -7,8 +7,10 @@ import Likes from './model/Like';
 import * as searchView from "./view/searchView";
 import * as recipeView from "./view/recipeView";
 import * as listView from "./view/listView";
+import * as likesView from "./view/likesView";
 
 import { elements, renderLoader, clearLoader } from './view/base';
+import Like from './model/Like';
 
 
 // import * as likesView from './view/likesView';
@@ -20,8 +22,6 @@ import { elements, renderLoader, clearLoader } from './view/base';
  *  - Liked reciped
  */
 const state = {};
-window.state = state;
-
 
 /**
  * ---------------------------------------------------------------
@@ -110,7 +110,10 @@ const controlRecipe = async () => {
 
             // 5. render the result on UI
             clearLoader();
-            recipeView.renderRecipe(state.recipe);
+            recipeView.renderRecipe(
+                state.recipe,
+                state.likes.isLiked(id),
+            );
 
         } catch (error) {
             console.log(error);
@@ -175,18 +178,57 @@ elements.shopping.addEventListener('click', el => {
  */
 const controlLike = () => {
     // Create a new likes IF there is NO likes
-    if(!state.like) state.like = new Likes();
+    if(!state.likes) state.likes = new Likes();
     const curID = state.recipe.id;
 
     // Two conditions
-    if (!state.like.isLiked(curID)){
+    if (!state.likes.isLiked(curID)){
+        // Add item into state
+        const newLike = state.likes.addLike(
+            curID,
+            state.recipe.title,
+            state.recipe.author,
+            state.recipe.img
+        )
+
+        // Toggle the icon
+        likesView.toggleLikeBtn(true);
+
+        // Add the item into the UI
+        // state.likes.likes.forEach(el => likesView.renderLike(el));
+        likesView.renderLike(newLike);
+        console.log(state.likes);
+    }
+
+    else {
+        // Delete the item in the state
+        state.likes.deleteLike(curID);
+
+        // Toggle the icon
+        likesView.toggleLikeBtn(false);
+
+        // Delete the item from the UI
+        likesView.deleteLike(curID);
 
     }
-    else {
-        
-    }
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
 }
 
+
+
+// Reload the likes into like
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+    
+    state.likes.readStorage();
+
+    // Toggle the like icon in the recipe
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    // Render the exist thing 
+    state.likes.likes.forEach(el => likesView.renderLike(el));
+
+})
 
 
 
@@ -216,3 +258,38 @@ elements.recipe.addEventListener('click', e => {
     }
 
 });
+
+catName("Chloe");
+function catName(name) {
+    // this.a = 1;
+    console.log("我的猫名叫 " + name);
+    console.log(typeof this);
+    console.log(this);
+};
+
+
+
+
+function identify() {
+	return this.name.toUpperCase();
+}
+
+function speak() {
+	var greeting = "Hello, I'm " + identify.call( this );
+    console.log( greeting );
+    console.log( this );
+}
+
+var me = {
+	name: "Kyle"
+};
+
+var you = {
+	name: "Reader"
+};
+
+identify.call( me ); // KYLE
+identify.call( you ); // READER
+
+speak.call( me ); // Hello, I'm KYLE
+speak.call( you ); // Hello, I'm READER
