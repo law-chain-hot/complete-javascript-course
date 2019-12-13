@@ -6,7 +6,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
 
 .clearfix::after {
@@ -16,7 +15,7 @@
 }
 
 body {
-    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(back.jpg);
+    background-image: linear-gradient(rgba(19, 5, 36, 0.747), rgba(28, 20, 62, 0.4)), url(back.jpg);
     background-size: cover;
     background-position: center;
     font-family: Lato;
@@ -28,13 +27,17 @@ body {
 
 .wrapper {
     width: 1000px;
-    position: absolute;
-    top: 50%;
+    /* height: 500px; */
+    position: relative;
+    float: left;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color: rgb(199, 196, 196);
     box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    margin: 30px;
+    border-radius: 10px
 }
 
 .player-0-panel,
@@ -43,6 +46,10 @@ body {
     float: left;
     height: 600px;
     padding: 100px;
+    
+    /* 添加 */
+    border: 3px solid black ;
+    border-radius: 10px
 }
 
 
@@ -63,6 +70,7 @@ body {
 }
 
 .player-score {
+
     text-align: center;
     font-size: 80px;
     font-weight: 100;
@@ -84,7 +92,7 @@ body {
 }
 
 .player-current-box {
-    background-color: #EB4D4D;
+    background: #EB4D4D;
     color: #fff;
     width: 40%;
     margin: 0 auto;
@@ -122,7 +130,7 @@ button {
 button:hover { font-weight: 600; }
 button:hover i { margin-right: 20px; }
 
-button:focus {
+button:focus { 
     outline: none;
 }
 
@@ -150,5 +158,26 @@ i {
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
 }
 
-.winner { background-color: #f7f7f7; }
+.winner { background-color: #b1aeae; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
+
+
+/* extra */
+.container2 {
+    width: 60rem;
+    height: 10rem;
+    margin: 3vw auto;
+    background-color: rgba(223, 223, 223, 0.685);
+    border-radius: 3rem;
+    /* overflow: hidden; */
+    box-shadow: 0 2rem 6rem 0.5rem rgba(101, 90, 86, 0.2);
+    display: grid;
+    grid-template-rows: 10rem minmax(10rem, auto);
+    grid-template-columns: 1.1fr 2fr 1.1fr;
+    grid-template-areas: "head head head" "list recipe shopping";
+
+    /* position: absolute; */
+    top: 50%;
+    left: 50%;
+
+}

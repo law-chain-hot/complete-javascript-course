@@ -400,10 +400,14 @@ var AppController = (function(budgetCtrl, UICtrl) {
         }
     };
 
+    // event delegation
     var ctrlDeleteItem = function(event) {
         var itemID, splitID, type, ID, target;
         target = event.target
-        itemID = target.parentNode.parentNode.parentNode.parentNode.id;
+        if (target.matches('.ion-ios-close-outline')){
+            itemID = target.parentNode.parentNode.parentNode.parentNode.id;
+        }
+        // itemID = target.closest('.item').id;
         // console.log(itemID);
 
         if (itemID){
@@ -435,7 +439,7 @@ var AppController = (function(budgetCtrl, UICtrl) {
 
         // 2. Get the percentatges from the budget controller
         allPerc = budgetCtrl.getPercentages();
-        console.log(allPerc);
+        // console.log(allPerc);
         // 3. Updata the UI with new percentages
         UICtrl.displayPercentages(allPerc);
 
