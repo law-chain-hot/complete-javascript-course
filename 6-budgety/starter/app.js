@@ -465,3 +465,4 @@ var AppController = (function(budgetCtrl, UICtrl) {
 
 
 AppController.init(); // the only line of code that is placed outside
+
